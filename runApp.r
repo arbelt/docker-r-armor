@@ -19,7 +19,7 @@ args <- docopt(doc, cmdArgs, help = TRUE)
 
 port <- if (!is.null(args$port)) as.numeric(args$port) else getOption("shiny.port")
 
-appdir <- if (!is.null(args$appdir)) args$appdir else {
+appdir <- if (!is.null(args$appdir) & dir.exists(args$appdir)) args$appdir else {
   system.file("examples", args$example, package = "shiny")
 }
 

@@ -16,14 +16,15 @@ RUN chmod 755 /gomplate
 RUN mkdir -p /out/usr/local/bin && mv /hivemind /out/usr/local/bin/ \
     && cp /gomplate /out/usr/local/bin/ \
     && cp /armor /out/usr/local/bin/
+COPY /Procfile /out
+COPY /runApp.r /out/usr/local/bin/
+COPY /armor.yml /out/etc/armor/config.yml
 
-FROM rocker/shiny-verse
+FROM rocker/r-apt:bionic
 MAINTAINER Albert Wang <albert.zhao.wang@gmail.com>
-RUN install2.r -- logger
+RUN apt-get update && apt-get install -y \
+    r-cran-shiny
 COPY --from=build /out /
-COPY /runApp.r /usr/local/bin/
-COPY /Procfile /
-COPY /armor.yml /etc/armor/config.yml
-RUN echo 'options(shiny.port = 3838)' >> /usr/local/lib/R/etc/Rprofile.site
+RUN echo 'options(shiny.port = 3838)' >> /usr/lib/R/etc/Rprofile.site
 RUN useradd -m myuser
 CMD ["hivemind"]
