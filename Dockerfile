@@ -22,7 +22,8 @@ COPY /armor.yml /out/etc/armor/config.yml
 
 FROM rocker/r-apt:bionic
 MAINTAINER Albert Wang <albert.zhao.wang@gmail.com>
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y \
     r-cran-shiny
 COPY --from=build /out /
 RUN echo 'options(shiny.port = 3838)' >> /usr/lib/R/etc/Rprofile.site
