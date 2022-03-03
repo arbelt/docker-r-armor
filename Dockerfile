@@ -20,7 +20,7 @@ COPY /Procfile /out
 COPY /runApp.r /out/usr/local/bin/
 COPY /armor.yml /out/etc/armor/config.yml
 
-FROM rocker/r-apt:bionic
+FROM rocker/r-ubuntu:20.04
 MAINTAINER Albert Wang <albert.zhao.wang@gmail.com>
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y \
